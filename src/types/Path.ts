@@ -10,4 +10,10 @@ export enum Path {
   cart = 'cart',
   favourites = 'favourites',
   notFound = '*',
+  dashboard = 'dashboard',
+  register = 'register',
+  login = '/login',
+  forgotPassword = '/forgot-password',
+  contacts = 'contacts',
+  rights = 'rights',
 }

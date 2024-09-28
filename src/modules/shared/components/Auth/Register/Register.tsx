@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './Register.module.scss';
+import { Path } from '@/types/Path';
 
 const Register = () => {
   const { t } = useTranslation();
@@ -52,7 +53,7 @@ const Register = () => {
     };
     localStorage.setItem('userData', JSON.stringify(userData));
 
-    navigate('/login');
+    navigate(Path.login);
   };
 
   return (
@@ -112,7 +113,7 @@ const Register = () => {
         </form>
         <div className={styles['form-footer']}>
           {t('auth.alreadyHaveAccount')}{' '}
-          <Link to="/login">{t('auth.login')}</Link>
+          <Link to={Path.login}>{t('auth.login')}</Link>
         </div>
       </div>
     </div>

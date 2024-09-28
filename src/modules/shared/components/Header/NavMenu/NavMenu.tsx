@@ -1,8 +1,9 @@
 import React from 'react';
+import cn from 'classnames';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './NavMenu.module.scss';
-import { Path } from '@/types/Path';
+import { menuLinks } from '@/types/ProductsCategory';
 
 type NavMenuProps = {
   language: string;
@@ -20,71 +21,30 @@ export const NavMenu: React.FC<NavMenuProps> = ({
 
   const handleLinkClick = () => {
     setIsMenuOpen(false);
-    document.body.classList.remove('menu_open');
   };
+
+  const getNavClass = ({ isActive }: { isActive: boolean }) =>
+    cn(styles.menu__link, { [styles.is_active]: isActive });
 
   return (
     <nav
-      className={`${styles.menu} ${isMenuOpen ? styles.menu__open : ''} ${
-        isDarkTheme ? styles.dark : ''
-      }`}
+      className={cn(styles.menu, {
+        [styles.menu__open]: isMenuOpen,
+        [styles.dark]: isDarkTheme,
+      })}
     >
       <ul className={styles.menu__list}>
-        <li className={styles.menu__item}>
-          <NavLink
-            to={Path.main}
-            className={({ isActive }) =>
-              isActive
-                ? `${styles.menu__link} ${styles.is_active}`
-                : styles.menu__link
-            }
-            onClick={handleLinkClick}
-          >
-            {t('home')}
-          </NavLink>
-        </li>
-
-        <li className={styles.menu__item}>
-          <NavLink
-            to={Path.phones}
-            className={({ isActive }) =>
-              isActive
-                ? `${styles.menu__link} ${styles.is_active}`
-                : styles.menu__link
-            }
-            onClick={handleLinkClick}
-          >
-            {t('phones')}
-          </NavLink>
-        </li>
-
-        <li className={styles.menu__item}>
-          <NavLink
-            to={Path.tablets}
-            className={({ isActive }) =>
-              isActive
-                ? `${styles.menu__link} ${styles.is_active}`
-                : styles.menu__link
-            }
-            onClick={handleLinkClick}
-          >
-            {t('tablets')}
-          </NavLink>
-        </li>
-
-        <li className={styles.menu__item}>
-          <NavLink
-            to={Path.accessories}
-            className={({ isActive }) =>
-              isActive
-                ? `${styles.menu__link} ${styles.is_active}`
-                : styles.menu__link
-            }
-            onClick={handleLinkClick}
-          >
-            {t('accessories')}
-          </NavLink>
-        </li>
+        {menuLinks.map(({ path, label }) => (
+          <li className={styles.menu__item} key={label}>
+            <NavLink
+              to={path}
+              className={getNavClass}
+              onClick={handleLinkClick}
+            >
+              {t(label)}
+            </NavLink>
+          </li>
+        ))}
       </ul>
     </nav>
   );

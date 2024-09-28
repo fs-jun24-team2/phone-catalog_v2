@@ -22,10 +22,10 @@ export const Root = () => (
         <Route index element={<HomePage />} />
 
         {/* Auth Routes should be part of the same Routes hierarchy */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path={Path.login} element={<Login />} />
+        <Route path={Path.register} element={<Register />} />
+        <Route path={Path.forgotPassword} element={<ForgotPassword />} />
+        <Route path={Path.dashboard} element={<Dashboard />} />
 
         {/* Redirect /home to main */}
         <Route
@@ -46,8 +46,8 @@ export const Root = () => (
         {/* Other routes */}
         <Route path={Path.cart} element={<CartPage />} />
         <Route path={Path.favourites} element={<FavouritesPage />} />
-        <Route path="/contacts" Component={Contacts} />
-        <Route path="/rights" Component={Rights} />
+        <Route path={Path.contacts} Component={Contacts} />
+        <Route path={Path.rights} Component={Rights} />
       </Route>
 
       {/* Catch all NotFoundPage */}

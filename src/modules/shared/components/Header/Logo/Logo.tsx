@@ -1,22 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Logo.module.scss';
-import original_logo from '/images/original/logo/original_logo.svg';
-import dark_logo from '/images/dark/logo/dark_logo.svg';
+
 import { Path } from '@/types/Path';
+import { getLogoIcon } from '@/modules/shared/helpers/getLogoIcon';
+import { ThemeContext } from '@/context/ThemeContext';
 
-type LogoProps = {
-  isDarkTheme: boolean;
-};
+export const Logo: React.FC = () => {
+  const theme = useContext(ThemeContext);
 
-export const Logo: React.FC<LogoProps> = ({ isDarkTheme }) => {
   return (
     <div className={styles.header__logo}>
       <Link to={Path.main}>
-        <img
-          src={isDarkTheme ? dark_logo : original_logo}
-          alt="Nice Gadgets logo"
-        />
+        <img src={getLogoIcon(theme)} alt="Nice Gadgets logo" />
       </Link>
     </div>
   );

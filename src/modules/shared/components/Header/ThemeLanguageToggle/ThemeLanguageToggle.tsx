@@ -1,37 +1,39 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import styles from './ThemeLanguageToggle.module.scss';
 import original_ua from '/images/original/icons/original_ua.svg';
 import original_gb from '/images/original/icons/original_gb.svg';
-import dark_sun from '/images/dark/icons/dark_sun.svg';
-import original_moon from '/images/original/icons/original_moon.svg';
+import { ThemeContext } from '@/context/ThemeContext';
+import cn from 'classnames';
 
-import original_user from '/images/original/icons/original_user.svg';
-import dark_user from '/images/dark/icons/dark_user.svg';
-import danylo from '/images/users/Vitalii.jpeg';
+import user from '/images/users/Vitalii.jpeg';
+import { Theme } from '@/types/Theme';
+import { getThemeIcon } from '@/modules/shared/helpers/getThemeIcon';
+import { getUserIcon } from '@/modules/shared/helpers/getUserIcon';
+import { Path } from '@/types/Path';
 
 type ThemeLanguageToggleProps = {
   language: string;
-  isDarkTheme: boolean;
   changeLanguage: () => void;
   toggleTheme: () => void;
 };
 
 export const ThemeLanguageToggle: React.FC<ThemeLanguageToggleProps> = ({
   language,
-  isDarkTheme,
   changeLanguage,
   toggleTheme,
 }) => {
   const location = useLocation();
+  const theme = useContext(ThemeContext);
+  const isDarkTheme = theme === Theme.dark;
 
-  const isDashboardPage = location.pathname === '/dashboard';
+  const isDashboardPage = location.pathname === Path.dashboard;
 
   return (
     <div
-      className={`${styles.theme_language_toggle} ${
-        isDarkTheme ? styles.dark : ''
-      }`}
+      className={cn(styles.theme_language_toggle, {
+        [styles.dark]: isDarkTheme,
+      })}
     >
       <button className={styles.theme_toggle} onClick={changeLanguage}>
         <img
@@ -43,16 +45,14 @@ export const ThemeLanguageToggle: React.FC<ThemeLanguageToggleProps> = ({
       <button className={styles.theme_toggle} onClick={toggleTheme}>
         <img
           className={styles.sunMoon}
-          src={isDarkTheme ? dark_sun : original_moon}
+          src={getThemeIcon(theme)}
           alt="Switch Theme"
         />
       </button>
-      <Link to="/register" className={styles.theme_toggle}>
+      <Link to={Path.register} className={styles.theme_toggle}>
         <img
           className={styles.user_logo}
-          src={
-            isDashboardPage ? danylo : isDarkTheme ? dark_user : original_user
-          }
+          src={isDashboardPage ? user : getUserIcon(theme)}
           alt="User"
         />
       </Link>
