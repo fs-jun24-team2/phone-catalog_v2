@@ -1,0 +1,98 @@
+@import '@/style.scss';
+
+.gallery {
+  display: flex;
+  flex-direction: column-reverse;
+  
+  column-gap: toRem(16);
+  row-gap: toRem(16);
+
+  @media (min-width: $tablet) {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  @media (min-width: $desktop) {
+    grid-template-columns: repeat(12, toRem(32));
+  }
+
+  &__miniatures {
+    display: flex;
+    gap: toRem(16);
+    overflow: hidden;
+
+    @media (min-width: $tablet){
+      flex-direction: column;
+      grid-column: 1 / 2;
+    }
+
+    @media (min-width: $desktop){
+      grid-column: 1 / 3;
+    }
+  }
+
+  &__miniature-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+
+    cursor: pointer;
+    border: 1px solid $original_elements;
+    transition: border 0.5s;
+
+    &:hover {
+      border-color: $original_primary;
+    }
+    
+    &--active {
+      border-color: $original_primary;
+    }
+  }
+
+  .gallery__miniature-container-dark{
+    border-color: $dark_surface_2;
+
+    &:hover {
+      border-color: $dark_icons;
+    }
+
+    &.gallery__miniature-container--active {
+      border-color: $dark_secondary;
+    }
+  }
+
+  &__miniature {
+    display: block;
+    max-height: 100%;
+    width: auto;
+    
+    object-fit: cover;
+  }
+
+  &__main-image-container {
+    max-height: toRem(450);
+
+    display: flex;
+    justify-content: center;
+
+
+    overflow: hidden;
+
+    @media (min-width: $tablet){
+      grid-column: 2 / -1;
+    }
+
+    @media (min-width: $desktop){
+      grid-column: 3 / -1;
+    }
+  }
+
+  &__main-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: scale-down;
+  }
+}

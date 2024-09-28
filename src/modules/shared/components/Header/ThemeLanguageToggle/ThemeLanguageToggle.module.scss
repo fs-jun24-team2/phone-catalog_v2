@@ -1,0 +1,48 @@
+@import "@/style.scss";
+
+.theme_language_toggle {
+  display: flex;
+}
+.theme_toggle {
+  cursor: pointer;
+  display: flex;
+  margin-right: toRem(14);
+  border: 1px solid $original_primary;
+  border-radius: 50%;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 1px 1px 5px $original_primary;
+  width: toRem(24);
+  height: toRem(24);
+  transition: all $transitionDuration ease;
+
+  .sunMoon {
+    width: toRem(14);
+    height: toRem(14);
+  }
+
+  .flags {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .user_logo {
+    width: 100%;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: $transformScale;
+    }
+  }
+
+}
+
+.dark {
+  .theme_toggle {
+    border: 1px solid $dark_secondary;
+    box-shadow: 1px 1px 5px $dark_secondary;
+  }
+}

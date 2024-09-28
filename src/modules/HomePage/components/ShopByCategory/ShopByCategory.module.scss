@@ -1,0 +1,68 @@
+@import "../../../../style.scss";
+
+.category-high-title{
+  margin-top: toRem(80);
+
+  @media (max-width: 1199px) {
+    margin-top: toRem(64);
+  }
+}
+
+.all-categories{
+  display: flex;
+  justify-content: space-between;
+  margin: toRem(24) 0;
+
+  @media (max-width: 640px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__picture{
+    width: clamp(187px, 25vw, 368px);
+    height: clamp(187px, 25vw, 368px);
+
+    @media (max-width: 640px) {
+      width: toRem(288);
+      height: toRem(288);
+
+      margin: toRem(32) 0 0;
+    }
+
+    @media (min-width: 1200px) {
+      width: toRem(368);
+      height: toRem(368);
+    }
+  }
+
+  &__title{
+    margin-top: toRem(24);
+  }
+
+  &__amount{
+    margin-top: toRem(10);
+    color: $original_secondary;
+  }
+}
+
+.category{
+  transition: transform 0.5s;
+
+  &:hover {
+  transform: $transformScale;
+}}
+
+.category-dark{
+  .category-high-title{
+    color: $dark_white;
+  }
+
+  .all-categories__title{
+    color: $dark_white;
+  }
+  
+  .all-categories__amount{
+    color: $dark_secondary;
+  }
+}

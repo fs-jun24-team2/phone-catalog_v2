@@ -1,0 +1,133 @@
+@import "@/style.scss";
+
+.menu {
+}
+
+.menu__list {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: toRem(48);
+  align-items: center;
+  transition: all $transitionDuration ease-in-out;
+}
+
+.menu__item {
+  transition: transform $transitionDuration ease 0s;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: $transformScale;
+    }
+  }
+}
+
+.menu__link {
+  text-transform: uppercase;
+  font-weight: $bold;
+  color: $original_secondary;
+  transition: all $transitionDuration ease 0s;
+  cursor: pointer;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: $original_primary;
+    }
+  }
+}
+
+// .menu__open {
+//   display: block;
+// }
+
+.is_active {
+  position: relative;
+  color: $original_primary;
+  font-weight: $bold;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: toRem(-23);
+    left: 0;
+    height: toRem(4);
+    width: 100%;
+    background-color: $original_primary;
+    border-radius: toRem(8);
+  }
+
+  @media (max-width: 1200px) {
+    &::after {
+      bottom: toRem(-15);
+    }
+  }
+
+  @media (max-width: 640px) {
+    &::after {
+      bottom: toRem(-10);
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .menu__list {
+    column-gap: toRem(12);
+  }
+  .menu__link {
+    font-size: toRem(12);
+  }
+}
+
+@media (max-width: 640px) {
+
+
+  .menu__list {
+    display: none;
+  }
+
+  .menu__open .menu__list {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: toRem(48);
+    left: 0;
+    width: 100%;
+    background-color: $original_hover_and_bg;
+    min-height: 100%;
+    padding-top: toRem(56);
+
+    .menu__link {
+      font-size: toRem(18);
+    }
+
+  }
+
+  .menu__item {
+    &:not(:last-child) {
+      margin-bottom: toRem(24);
+    }
+  }
+}
+
+// ==== DARK ===
+
+.dark {
+  .menu__list{
+    background-color: $dark_black;
+  }
+  .menu__link {
+    color: $dark_secondary;
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: $dark_white;
+      }
+    }
+  }
+
+  .is_active {
+    color: $dark_white;
+    &::after {
+      background-color: $dark_white;
+    }
+  }
+}

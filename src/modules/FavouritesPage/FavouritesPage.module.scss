@@ -1,0 +1,56 @@
+@import "@/style.scss";
+
+.favourites-page {
+
+  position: relative;
+
+  &--empty {
+    opacity: 0.7;
+    background-image: url('/img/cart-is-empty.png');
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    min-height: 50vh;
+    position: relative;
+    z-index: -1;
+    pointer-events: none;
+  }
+  &__breadcrumbs {
+    margin-bottom: toRem(24);
+
+    @media (min-width: 640px) {
+      margin-bottom: (40);
+    }
+  }
+  
+  &__header {
+    margin-bottom: toRem(32);
+
+    @media (min-width: 640px) {
+      margin-bottom: (40);
+    }
+  }
+  
+  &__title {
+    margin-bottom: toRem(8);
+  }
+
+  &__product-amount {
+    font-weight: $semiBold;
+    color: $original_secondary;
+  }
+
+  &__products-list {
+    margin-bottom: toRem(64);
+
+    @media (min-width: 1200px) {
+      margin-bottom: toRem(80);
+    }
+  }
+}
+
+.favourites-page__header-dark{
+  .favourites-page__title{
+    color: $dark_white;
+  }
+}

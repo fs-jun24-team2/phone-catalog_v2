@@ -1,0 +1,36 @@
+@import "../../../../style.scss";
+
+.btn-favourites {
+  height: toRem(40);
+  width: toRem(40);
+  border: toRem(1) solid $original_icons;
+  background-image: url("/images/original/icons/original_favorites.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto;
+
+  &:hover {
+    border-color: $original_primary;
+  }
+
+  &--added {
+    background-image: url("/images/original/icons/original_favourites_filled.svg");
+    border-color: $original_elements;
+  }
+}
+
+.btn-favourites-dark{
+  border-color: $dark_surface_1;
+  background-color: $dark_surface_2;
+  background-image: url("/public/images/original/icons/original_favorites_black.svg");
+
+  &:hover {
+    background-color: $dark_icons;
+  }
+
+  &.btn-favourites--added{
+    background-image: url("/images/original/icons/original_favourites_filled.svg");
+    border-color: $dark_elements;
+    background-color: $dark_surface_1;
+  }
+}
