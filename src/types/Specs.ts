@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 export enum Specs {
   Resolution = 'specs_resolution',
   Processor = 'specs_processor',

@@ -7,7 +7,6 @@ import { Path } from '@/types/Path';
 type NavMenuProps = {
   language: string;
   isMenuOpen: boolean;
-  // eslint-disable-next-line no-unused-vars
   setIsMenuOpen: (value: boolean) => void;
   isDarkTheme: boolean;
 };
