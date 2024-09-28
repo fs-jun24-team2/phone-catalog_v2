@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 
 type Props = {
   colors: string[];
-  // eslint-disable-next-line no-unused-vars
   onSetColor: (color: string) => void;
   currentColor: string;
   id?: string;

@@ -21,7 +21,7 @@
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     "incremental": true,
     "tsBuildInfoFile": "./.build_cache/tsconfig.app.tsbuildinfo"

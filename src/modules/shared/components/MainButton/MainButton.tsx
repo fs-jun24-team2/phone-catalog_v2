@@ -4,7 +4,6 @@ import cn from 'classnames';
 
 type Props = {
   isAdded?: boolean;
-  // eslint-disable-next-line no-unused-vars
   handleOnClick: (event: React.MouseEvent<HTMLElement>) => void;
   buttonText: string;
   isDisibled?: boolean;

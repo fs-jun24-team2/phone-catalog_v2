@@ -6,7 +6,6 @@ import { useUpdateSearchParams } from '@/hooks/useUpdateSearchParams';
 import { SearchParamsType } from '@/types/SearchParamsType';
 
 type VirtualAssistantProps = {
-  // eslint-disable-next-line no-unused-vars
   onSearch: (searchTerm: string) => void;
 };
 

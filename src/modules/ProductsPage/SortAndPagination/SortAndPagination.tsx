@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
 interface SortAndPaginationPanelProps {
-  // eslint-disable-next-line no-unused-vars
   onHandleItemPerPage: (perPage: number) => void;
   totalItems: number;
 }

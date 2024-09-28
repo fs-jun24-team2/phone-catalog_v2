@@ -11,7 +11,6 @@ interface SortSelectorProps {
   label: string;
   options: SelectedOption[];
   className?: string;
-  // eslint-disable-next-line no-unused-vars
   onChange: (selectedOption: SingleValue<SelectedOption>) => void;
 }
 

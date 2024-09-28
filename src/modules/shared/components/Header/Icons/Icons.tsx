@@ -17,7 +17,6 @@ type IconsProps = {
   isDarkTheme: boolean;
   changeLanguage: () => void;
   toggleTheme: () => void;
-  // eslint-disable-next-line no-unused-vars
   setIsMenuOpen: (value: boolean) => void;
 };
 

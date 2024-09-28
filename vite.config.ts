@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
-  base: '/phone-catalog/',
+  base: '/phone-catalog_v2/',
   plugins: [react()],
   resolve: {
     alias: {

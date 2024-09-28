@@ -10,7 +10,6 @@ interface PaginationProps {
   totalItems: number;
   itemsPerPage: number;
   currentPage: number;
-  // eslint-disable-next-line no-unused-vars
   onPageChange: (page: number) => void;
 }
 

@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react';
 type Props = {
   capacities: string[];
   category: ProductsCategory;
-  // eslint-disable-next-line no-unused-vars
   onSetCapacity: (capacity: string) => void;
   currentCapacity: string;
 };
