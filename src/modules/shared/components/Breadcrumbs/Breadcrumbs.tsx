@@ -1,33 +1,24 @@
-import { Link, useLocation } from 'react-router-dom';
 import styles from './Breadcrumbs.module.scss';
-import { Crumb } from './Crumb/Crumb';
 import breadcrumbs_home from '/images/original/breadcrumbs/home.svg';
 import breadcrumbs_dark_home from '/images/original/breadcrumbs/homedark.svg';
-import { useEffect, useState } from 'react';
+
+import { useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import cn from 'classnames';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
+import { Crumb } from './Crumb/Crumb';
 
 export const Breadcrumbs = () => {
   const location = useLocation();
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
 
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  });
-
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
   const crumbs = location.pathname.split('/').filter(crumb => crumb !== '');
 
   return (
     <div
-      className={`${styles['breadcrumbs']} ${isDarkTheme ? styles['breadcrumbs-dark'] : ''}`}
+      className={cn(styles['breadcrumbs'], {
+        [styles['breadcrumbs-dark']]: isDarkTheme,
+      })}
     >
       <Link to="/">
         <img

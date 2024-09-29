@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
 import styles from './AboutItem.module.scss';
+
+import React, { useContext } from 'react';
+import cn from 'classnames';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
 import { PhoneDescription } from '@/types/Product';
 import { AboutText } from '../AboutText';
 
@@ -8,25 +11,14 @@ interface AboutItemProps {
 }
 
 export const AboutItem: React.FC<AboutItemProps> = ({ item }) => {
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  });
   return (
     <div className={styles.text_container}>
       <h3
-        className={`${styles['text_title']} ${isDarkTheme ? styles['text_title-dark'] : ''}`}
+        className={cn(styles['text_title'], {
+          [styles['text_title-dark']]: isDarkTheme,
+        })}
       >
         {item.title}
       </h3>

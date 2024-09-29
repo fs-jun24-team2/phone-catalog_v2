@@ -7,11 +7,13 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/pagination';
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { PaginationOptions } from 'swiper/types';
 import cn from 'classnames';
 import { getBanners } from '@/utils/getBanners';
-import { PaginationOptions } from '../../../../../node_modules/swiper/types/modules/pagination';
+
 import { PictureSlide } from './PictureSlide/PictureSlide';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
 
 export const PictureSlider: React.FC = () => {
   const [swiper, setSwiper] = useState<SwiperType | null>(null);
@@ -22,21 +24,7 @@ export const PictureSlider: React.FC = () => {
       return `<span class="${className} ${styles['picture-slider__swiper-pagination']}"></span>`;
     },
   };
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  });
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   return (
     <section className={cn('grid-container', styles['picture-slider'])}>

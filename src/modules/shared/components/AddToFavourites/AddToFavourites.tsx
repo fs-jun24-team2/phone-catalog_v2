@@ -1,13 +1,16 @@
 import styles from './AddToFavourites.module.scss';
 
-import { useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import cn from 'classnames';
-import { useAppDispatch } from '@/app/hooks';
-import { toggleFavourite } from '@/features/favouritesSlice';
-import { hasFavouritesProduct } from '@/utils/hasFavouritesProduct';
+
 import { Product } from '@/types/Product';
 import { ProductsCategory } from '@/types/ProductsCategory';
 import { AggregateProduct } from '@/types/AggregateProduct';
+
+import { ThemeMethodsContext } from '@/context/ThemeContext';
+import { useAppDispatch } from '@/app/hooks';
+import { toggleFavourite } from '@/features/favouritesSlice';
+import { hasFavouritesProduct } from '@/utils/hasFavouritesProduct';
 
 type Props = {
   product: Product | AggregateProduct;
@@ -32,21 +35,7 @@ export const AddToFavourites = ({
     setIsAddedToFavourites(prev => !prev);
   };
 
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  });
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   return (
     <button

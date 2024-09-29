@@ -1,10 +1,12 @@
-import { useAppSelector } from '@/app/hooks';
-import styles from './ShopByCategory.module.scss';
-import { selectProducts } from '@/features/productsSlice';
-import { useCategoriesData } from '../../../../hooks/useCategoriesData';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import cn from 'classnames';
+import styles from './ShopByCategory.module.scss';
+import { useAppSelector } from '@/app/hooks';
+import { selectProducts } from '@/features/productsSlice';
+import { useCategoriesData } from '@/hooks/useCategoriesData';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
 
 export const ShopByCategory = () => {
   const { t } = useTranslation();
@@ -19,27 +21,11 @@ export const ShopByCategory = () => {
     accessoriesAmount,
   });
 
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  });
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   return (
-    <div
-      className={`${styles['']} ${isDarkTheme ? styles['category-dark'] : ''}`}
-    >
-      <h2 className={`${styles['style-h2']} ${styles['category-high-title']} `}>
+    <div className={cn({ [styles['category-dark']]: isDarkTheme })}>
+      <h2 className={cn(styles['style-h2'], styles['category-high-title'])}>
         {t('shop_by_category')}
       </h2>
 
@@ -52,14 +38,20 @@ export const ShopByCategory = () => {
                 className={styles['all-categories__picture']}
               />
               <div
-                className={`${styles['style-h4']} ${styles['all-categories__title']} `}
+                className={cn(
+                  styles['style-h4'],
+                  styles['all-categories__title'],
+                )}
               >
                 {category.title}
               </div>
             </Link>
 
             <div
-              className={`${styles['body-text']} ${styles['all-categories__amount']} `}
+              className={cn(
+                styles['body-text'],
+                styles['all-categories__amount'],
+              )}
             >
               {category.amount} {t('models')}
             </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Select, { components, SingleValue } from 'react-select';
 import styles from './SortSelector.module.scss';
 
@@ -6,6 +6,7 @@ import downArrow from '/images/original/icons/original_down.svg';
 import upArrow from '/images/original/icons/original_to-up.svg';
 import { SelectedOption } from '@/types/SelectedOption';
 import { useTranslation } from 'react-i18next';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
 
 interface SortSelectorProps {
   label: string;
@@ -36,21 +37,7 @@ export const SortSelector: React.FC<SortSelectorProps> = ({
   const defaultValue = options[2];
   const [value, setValue] = useState(defaultValue);
 
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  }, []);
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   const handleMenuOpen = () => setMenuIsOpen(true);
   const handleMenuClose = () => setMenuIsOpen(false);

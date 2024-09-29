@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import styles from './About.module.scss';
 import { PhoneDescription } from '@/types/Product';
 import { AboutItem } from './AboutItem';
 import { useTranslation } from 'react-i18next';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
 
 interface AboutProps {
   description: PhoneDescription[];
@@ -10,21 +11,7 @@ interface AboutProps {
 
 export const About: React.FC<AboutProps> = ({ description }) => {
   const { t } = useTranslation();
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  });
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   return (
     <section

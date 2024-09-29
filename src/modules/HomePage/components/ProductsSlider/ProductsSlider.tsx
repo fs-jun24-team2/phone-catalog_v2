@@ -2,13 +2,14 @@ import styles from './ProductsSlider.module.scss';
 import 'swiper/css';
 
 import { ProductCard } from '@/modules/shared/components/ProductCard';
-import { useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Swiper as SwiperType } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import cn from 'classnames';
 import { Product } from '@/types/Product';
 import { AggregateProduct } from '@/types/AggregateProduct';
 import { ProductsCategory } from '@/types/ProductsCategory';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
 
 type Props<T> = {
   title: string;
@@ -32,26 +33,14 @@ export const ProductsSlider = <T extends Product | AggregateProduct>({
     }
   };
 
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  });
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   return (
     <section>
       <div
-        className={`${styles['products-slider-header']} ${isDarkTheme ? styles['products-slider-header-dark'] : ''}`}
+        className={cn(styles['products-slider-header'], {
+          [styles['products-slider-header-dark']]: isDarkTheme,
+        })}
       >
         <div className={styles['products-slider-header__title']}>{title}</div>
 

@@ -1,36 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import cn from 'classnames';
+import styles from './CartPage.module.scss';
+import { getCartAmount, getTotalPrice, clearCart } from '@/features/cartSlice';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
+import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { selectCart } from '@/features/cartSlice';
+
 import { Breadcrumbs } from '../shared/components/Breadcrumbs';
 import { MainButton } from '../shared/components/MainButton';
-import { CartItems } from './components/CartItems';
-
-import styles from './CartPage.module.scss';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { getCartAmount, getTotalPrice, clearCart } from '@/features/cartSlice';
-import { useTranslation } from 'react-i18next';
 import { PopupModal } from '../shared/components/PopupModal';
-import cn from 'classnames';
-import { selectCart } from '@/features/cartSlice';
+import { CartItems } from './components/CartItems';
 
 export const CartPage = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
   const totalPrice = useAppSelector(getTotalPrice);
   const totalProductsAmount = useAppSelector(getCartAmount);
   const [isModalVisible, setModalVisible] = useState(false);
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  }, []);
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   const cart = useAppSelector(selectCart);
   const cartEntries = Object.entries(cart);

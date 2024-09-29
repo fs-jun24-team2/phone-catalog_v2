@@ -1,40 +1,33 @@
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import cn from 'classnames';
 import styles from './ForgotPassword.module.scss';
+import { Path } from '@/types/Path';
+import { ThemeContext } from '@/context/ThemeContext';
+import { Theme } from '@/types/Theme';
 
 export const ForgotPassword = () => {
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  }, []);
+  const theme = useContext(ThemeContext);
+  const isDarkTheme = theme === Theme.dark;
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     console.log('Password reset request sent for:', email);
 
     setTimeout(() => {
-      navigate('/login');
+      navigate(Path.login);
     }, 1000);
   };
 
   return (
     <div
-      className={`${styles.forgot_password_container} ${isDarkTheme ? styles.dark_theme : ''}`}
+      className={cn(styles.forgot_password_container, {
+        [styles.dark_theme]: isDarkTheme,
+      })}
     >
       <div className={styles.auth_card}>
         <h2>{t('auth.forgotPassword')}</h2>

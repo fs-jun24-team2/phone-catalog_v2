@@ -23,7 +23,6 @@
 .user-info-section,
 .balance-section,
 .section {
-  background-color: $original_hover_and_bg;
   padding: toRem(20);
   border-radius: toRem(10);
   box-shadow: 0 toRem(4) toRem(8) rgba(0, 0, 0, 0.1);
@@ -46,7 +45,6 @@
 
 .section-placeholder {
   height: toRem(100);
-  background-color: $original_hover_and_bg;
   border: toRem(2) dashed $original_primary;
   border-radius: toRem(10);
   box-shadow: 0 toRem(4) toRem(8) rgba(0, 0, 0, 0.1);
@@ -124,7 +122,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr 2fr;
   padding: toRem(10);
-  background-color: $original_hover_and_bg;
   border-radius: toRem(5);
   box-shadow: 0 toRem(2) toRem(4) rgba(0, 0, 0, 0.1);
 }
@@ -147,7 +144,6 @@
   .user-info-section,
   .balance-section,
   .section {
-    background-color: $dark_hover_and_bg_transperency;
     border: 1px solid $original_hover_and_bg_transperency;
     color: $original_icons;
   }
