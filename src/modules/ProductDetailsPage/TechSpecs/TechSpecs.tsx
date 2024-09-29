@@ -1,7 +1,10 @@
-import { Product } from '@/types/Product';
-import React, { useEffect, useState } from 'react';
 import styles from './TechSpecs.module.scss';
+
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import cn from 'classnames';
+import { Product } from '@/types/Product';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
 
 interface TechSpecsProps {
   specs: Product;
@@ -9,21 +12,7 @@ interface TechSpecsProps {
 
 export const TechSpecs: React.FC<TechSpecsProps> = ({ specs }) => {
   const { t } = useTranslation();
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  });
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   const specEntries: [string, string | string[] | undefined][] = [
     [t('specs_screen'), specs.screen],
@@ -38,7 +27,7 @@ export const TechSpecs: React.FC<TechSpecsProps> = ({ specs }) => {
 
   return (
     <div
-      className={`${styles['specs']} ${isDarkTheme ? styles['specs-dark'] : ''}`}
+      className={cn(styles['specs'], { [styles['specs-dark']]: isDarkTheme })}
     >
       <h2 className={styles['specs__title']}>{t('techSpecs')}</h2>
       <ul className={styles['specs__list']}>

@@ -5,13 +5,13 @@ import React, { createContext, ReactNode, useEffect, useState } from 'react';
 
 type ThemeMethods = {
   toggleTheme: () => void;
-  isDarkTheme: () => boolean;
+  isDarkTheme: boolean;
 };
 
 export const ThemeContext = createContext<Theme>(Theme.light);
 export const ThemeMethodsContext = createContext<ThemeMethods>({
   toggleTheme: () => {},
-  isDarkTheme: () => false,
+  isDarkTheme: false,
 });
 
 type Props = {
@@ -33,7 +33,7 @@ const getInitialThemeState = (): Theme => {
 
 export const ThemeProvider: React.FC<Props> = ({ children }) => {
   const [theme, setTheme] = useState(getInitialThemeState);
-  const isDarkTheme = () => theme === Theme.dark;
+  const isDarkTheme = theme === Theme.dark;
   const toggleTheme = () => {
     setTheme(theme => {
       if (theme === Theme.dark) {
@@ -45,7 +45,7 @@ export const ThemeProvider: React.FC<Props> = ({ children }) => {
   };
 
   useEffect(() => {
-    if (isDarkTheme()) {
+    if (isDarkTheme) {
       document.body.classList.add(DARK_THEME_CLASS);
     } else {
       document.body.classList.remove(DARK_THEME_CLASS);

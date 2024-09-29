@@ -1,47 +1,29 @@
-import { useTranslation } from 'react-i18next';
 import styles from './Footer.module.scss';
 import footer_logo from '/images/original/footer/logo.svg';
 import footer_dark_logo from '/images/original/footer/logoblack.svg';
-import { scrollToTop } from '../../helpers/scrollToTop';
-import { useEffect, useState } from 'react';
+
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
+import cn from 'classnames';
+
+import { ThemeMethodsContext } from '@/context/ThemeContext';
+import { scrollToTop } from '../../helpers/scrollToTop';
+import { useFooterLinks } from '@/hooks/useFooterLinks';
 
 export const Footer = () => {
   const { t } = useTranslation();
-  const links = [
-    {
-      href: 'https://github.com/fs-jun24-team2/phone-catalog',
-      label: 'Github',
-    },
-    {
-      href: '/contacts',
-      label: t('contacts'),
-    },
-    {
-      href: '/rights',
-      label: t('rights'),
-    },
-  ];
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const links = useFooterLinks();
 
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  });
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   return (
     <footer>
       <div
-        className={`${styles['footer']} ${isDarkTheme ? styles['footer-dark'] : ''}`}
+        className={cn(styles['footer'], {
+          [styles['footer-dark']]: isDarkTheme,
+        })}
       >
         <img src={isDarkTheme ? footer_dark_logo : footer_logo} alt="Logo" />
         <div className={styles['footer__link']}>

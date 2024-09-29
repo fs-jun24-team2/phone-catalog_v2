@@ -1,21 +1,24 @@
 import styles from './ProductCard.module.scss';
 
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Product } from '@/types/Product';
-
-import { ProductsCategory } from '@/types/ProductsCategory';
-import { AggregateProduct } from '@/types/AggregateProduct';
-import { formatValueWithUnit } from '@/utils/formatValueWithUnit';
-import { useSpecs } from '@/hooks/useSpecs';
-import { MainButton } from '../MainButton';
 import cn from 'classnames';
-import React, { useEffect, useState } from 'react';
-import { hasCartProduct } from '@/utils/hasCartProduct';
-import { hasFavouritesProduct } from '@/utils/hasFavouritesProduct';
+
 import { useAppDispatch } from '@/app/hooks';
 import { toggleAddToCart } from '@/features/cartSlice';
 import { toggleFavourite } from '@/features/favouritesSlice';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
+
+import { Product } from '@/types/Product';
+import { ProductsCategory } from '@/types/ProductsCategory';
+import { AggregateProduct } from '@/types/AggregateProduct';
+import { hasFavouritesProduct } from '@/utils/hasFavouritesProduct';
+import { formatValueWithUnit } from '@/utils/formatValueWithUnit';
+import { hasCartProduct } from '@/utils/hasCartProduct';
+import { useSpecs } from '@/hooks/useSpecs';
+import { MainButton } from '../MainButton';
+import { isAggregateProduct } from '../../helpers/isAggregateProduct';
 
 type Props<T> = {
   product: T;
@@ -27,12 +30,6 @@ export const ProductCard = <T extends Product | AggregateProduct>({
   category,
 }: Props<T>) => {
   const { t } = useTranslation();
-  const isAggregateProduct = (
-    product: Product | AggregateProduct,
-  ): product is AggregateProduct => {
-    return 'itemId' in product && typeof product.itemId === 'string';
-  };
-
   const { id, name, priceRegular, priceDiscount, capacity, screen, ram } =
     isAggregateProduct(product)
       ? {
@@ -72,26 +69,14 @@ export const ProductCard = <T extends Product | AggregateProduct>({
     setIsAddedToFavourites(prev => !prev);
   };
 
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  });
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   return (
     <article
       key={id}
-      className={`${styles['product-card']} ${isDarkTheme ? styles['product-card-dark'] : ''}`}
+      className={cn(styles['product-card'], {
+        [styles['product-card-dark']]: isDarkTheme,
+      })}
     >
       <div className={styles['product-card__header']}>
         <Link

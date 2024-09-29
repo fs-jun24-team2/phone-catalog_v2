@@ -1,32 +1,23 @@
-import React, { useEffect, useState } from 'react';
 import styles from './AboutText.module.scss';
+import React, { useContext } from 'react';
+import cn from 'classnames';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
 
 interface AboutTextProps {
   text: string[];
 }
 
 export const AboutText: React.FC<AboutTextProps> = ({ text }) => {
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  });
   return (
     <>
       {text.map((paragraph, idx) => (
         <div key={idx}>
           <p
-            className={`${styles['text']} ${isDarkTheme ? styles['text-dark'] : ''}`}
+            className={cn(styles['text'], {
+              [styles['text-dark']]: isDarkTheme,
+            })}
           >
             {paragraph}
           </p>

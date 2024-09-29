@@ -1,13 +1,16 @@
-import { FavouritesList } from '@/modules/FavouritesPage/components/FavouritesList';
 import styles from './Dashboard.module.scss';
+
+import { FavouritesList } from '@/modules/FavouritesPage/components/FavouritesList';
 import { selectFavourites } from '@/features/favouritesSlice';
 import { useAppSelector } from '@/app/hooks';
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import vitalii from '/images/users/Vitalii.jpeg';
+import user from '/images/users/Vitalii.jpeg';
 import { useDrag, useDrop, DndProvider, DragSourceMonitor } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { getPurchaseHistory } from '@/modules/shared/helpers/getPurchaseHistory';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
+import cn from 'classnames';
 
 const ITEM_TYPE = 'section';
 
@@ -26,7 +29,7 @@ const Dashboard = () => {
     email: 'vitalii@mate.com',
     dateOfBirth: 'May 11, 1984',
     phone: '(096) 123-45-67',
-    avatarUrl: vitalii,
+    avatarUrl: user,
   };
 
   const balance = '$350.00';
@@ -40,21 +43,7 @@ const Dashboard = () => {
     { id: 'purchases', component: 'Purchases', isOpen: true },
   ]);
 
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  }, []);
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   const moveSection = (dragIndex: number, hoverIndex: number) => {
     const updatedSections = [...sections];
@@ -97,16 +86,14 @@ const Dashboard = () => {
     });
 
     const renderComponent = () => {
-      const sectionClassName = `${styles['section']} ${
-        isDarkTheme ? styles['dark_theme'] : ''
-      }`;
+      const sectionClassName = cn(styles['section'], {
+        [styles['dark_theme']]: isDarkTheme,
+      });
 
       switch (section.component) {
         case 'UserInfo':
           return (
-            <div
-              className={`${styles['user-info-section']} ${sectionClassName}`}
-            >
+            <div className={cn(styles['user-info-section'], sectionClassName)}>
               <div
                 className={styles['section-header']}
                 onClick={() => toggleSection(section.id)}
@@ -114,9 +101,9 @@ const Dashboard = () => {
                 {t('dashboard.userInformation')}
               </div>
               <div
-                className={`${styles['section-content']} ${
-                  section.isOpen ? styles['open'] : ''
-                }`}
+                className={cn(styles['section-content'], {
+                  [styles['open']]: section.isOpen,
+                })}
               >
                 {section.isOpen && (
                   <div className={styles['user-info']}>
@@ -150,7 +137,7 @@ const Dashboard = () => {
           );
         case 'Balance':
           return (
-            <div className={`${styles['balance-section']} ${sectionClassName}`}>
+            <div className={cn(styles['balance-section'], sectionClassName)}>
               <div
                 className={styles['section-header']}
                 onClick={() => toggleSection(section.id)}
@@ -178,9 +165,9 @@ const Dashboard = () => {
                 {t('dashboard.yourFavourites')}
               </div>
               <div
-                className={`${styles['section-content']} ${
-                  section.isOpen ? styles['open'] : ''
-                }`}
+                className={cn(styles['section-content'], {
+                  [styles['open']]: section.isOpen,
+                })}
               >
                 {section.isOpen && <FavouritesList items={items} />}
               </div>
@@ -196,9 +183,9 @@ const Dashboard = () => {
                 {t('dashboard.latestPurchases')}
               </div>
               <div
-                className={`${styles['section-content']} ${
-                  section.isOpen ? styles['open'] : ''
-                }`}
+                className={cn(styles['section-content'], {
+                  [styles['open']]: section.isOpen,
+                })}
               >
                 {section.isOpen && (
                   <div className={styles['purchases-list']}>
@@ -221,14 +208,15 @@ const Dashboard = () => {
             </div>
           );
         default:
-          return null;
       }
     };
 
     return (
       <div
         ref={node => drag(drop(node))}
-        className={`${styles['draggable-section']} ${isDragging ? styles['dragging'] : ''}`}
+        className={cn(styles['draggable-section'], {
+          [styles['dragging']]: isDragging,
+        })}
       >
         {renderComponent()}
       </div>
@@ -238,9 +226,9 @@ const Dashboard = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div
-        className={`${styles['dashboard-container']} ${
-          isDarkTheme ? styles['dark_theme'] : ''
-        }`}
+        className={cn(styles['dashboard-container'], {
+          [styles['dark_theme']]: isDarkTheme,
+        })}
       >
         {sections.map((section, index) => (
           <DraggableSection key={section.id} section={section} index={index} />

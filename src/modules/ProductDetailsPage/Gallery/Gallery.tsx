@@ -1,6 +1,7 @@
 import styles from './Gallery.module.scss';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import cn from 'classnames';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
 
 interface ImageGalleryProps {
   images: string[];
@@ -8,7 +9,7 @@ interface ImageGalleryProps {
 
 export const Gallery: React.FC<ImageGalleryProps> = ({ images }) => {
   const [selectedImage, setSelectedImage] = useState(images.at(0));
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   useEffect(() => {
     setSelectedImage(images.at(0));
@@ -17,20 +18,6 @@ export const Gallery: React.FC<ImageGalleryProps> = ({ images }) => {
   const handleImageClick = (image: string) => {
     setSelectedImage(image);
   };
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  });
 
   return (
     <div>

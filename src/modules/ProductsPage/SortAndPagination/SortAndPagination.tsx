@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
 import styles from './SortAndPagination.module.scss';
-import cn from 'classnames';
-import { SortSelector } from './SortSelector/SortSelector';
+
+import React, { useContext } from 'react';
 import { SingleValue } from 'react-select';
-import { SelectedOption } from '@/types/SelectedOption';
-import { SearchParamsType } from '@/types/SearchParamsType';
-import { useUpdateSearchParams } from '@/hooks/useUpdateSearchParams';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
+import cn from 'classnames';
+
+import { useUpdateSearchParams } from '@/hooks/useUpdateSearchParams';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
+import { SelectedOption } from '@/types/SelectedOption';
+import { SearchParamsType } from '@/types/SearchParamsType';
+import { SortSelector } from './SortSelector/SortSelector';
 
 interface SortAndPaginationPanelProps {
   onHandleItemPerPage: (perPage: number) => void;
@@ -24,21 +27,7 @@ export const SortAndPaginationPanel: React.FC<SortAndPaginationPanelProps> = ({
   const searchQuery = query.get(SearchParamsType.query);
   const searchQueryValue = searchQuery ? searchQuery : '';
 
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  }, []);
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   const handleSortChange = (selectedOption: SingleValue<SelectedOption>) => {
     updateSearchParams({

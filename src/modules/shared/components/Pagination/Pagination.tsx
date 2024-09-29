@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
 import styles from './Pagination.module.scss';
-
 import original_arrow_left from '/images/original/icons/original_arrow_left.svg';
 import original_arrow_right from '/images/original/icons/original_arrow_right.svg';
 import dark_arrow_left from '/images/dark/icons/dark_arrow_left.svg';
 import dark_arrow_right from '/images/dark/icons/dark_arrow_right.svg';
+
+import React, { useContext } from 'react';
+import cn from 'classnames';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
 
 interface PaginationProps {
   totalItems: number;
@@ -21,21 +23,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  }, []);
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   const getDisplayedPages = () => {
     const pages = [];
@@ -63,7 +51,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <div
-      className={`${styles.pagination} ${isDarkTheme ? styles.dark_theme : ''}`}
+      className={cn(styles.pagination, { [styles.dark_theme]: isDarkTheme })}
     >
       <button
         onClick={() => handlePageChange(currentPage - 1)}
@@ -80,7 +68,7 @@ export const Pagination: React.FC<PaginationProps> = ({
         <button
           key={page}
           onClick={() => handlePageChange(page)}
-          className={currentPage === page ? styles.activePage : ''}
+          className={cn({ [styles.activePage]: currentPage === page })}
         >
           {page}
         </button>

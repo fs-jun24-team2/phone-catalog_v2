@@ -8,27 +8,15 @@ import { FavouritesList } from './components/FavouritesList';
 
 import styles from './FavouritesPage.module.scss';
 import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
 
 export const FavouritesPage = () => {
   const { t } = useTranslation();
+  const isDarkTheme = useContext(ThemeMethodsContext);
   const items = useAppSelector(selectFavourites);
   const isEmpty = items.length === 0;
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
 
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  });
   return (
     <>
       <div className={cn('grid-container')}>
@@ -37,7 +25,9 @@ export const FavouritesPage = () => {
         </div>
 
         <div
-          className={`${styles['favourites-page__header']} ${isDarkTheme ? styles['favourites-page__header-dark'] : ''}`}
+          className={cn(styles['favourites-page__header'], {
+            [styles['favourites-page__header-dark']]: isDarkTheme,
+          })}
         >
           <h1 className={cn('style-h1', styles['favourites-page__title'])}>
             {t('favourites')}

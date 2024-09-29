@@ -1,18 +1,21 @@
-import { useTranslation } from 'react-i18next';
 import styles from './ProductCharacteristics.module.scss';
-import { Product } from '@/types/Product';
-import { AggregateProduct } from '@/types/AggregateProduct';
-import { Specs } from '@/types/Specs';
-import { formatValueWithUnit } from '@/utils/formatValueWithUnit';
-import { ProductsCategory } from '@/types/ProductsCategory';
-import { AddToCard } from '@/modules/shared/components/AddToCard/AddToCard';
-import { AddToFavourites } from '@/modules/shared/components/AddToFavourites';
-import { CapacityOptions } from './CapacityOptions';
-import { ColorOptions } from './СolorOptions';
-import { isAggregateProduct } from '@/modules/shared/helpers/isAggregateProduct';
-import { useAppSelector } from '@/app/hooks';
-import { useEffect, useState } from 'react';
+
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import cn from 'classnames';
+
+import { useAppSelector } from '@/app/hooks';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
+import { formatValueWithUnit } from '@/utils/formatValueWithUnit';
+import { AggregateProduct } from '@/types/AggregateProduct';
+import { ProductsCategory } from '@/types/ProductsCategory';
+import { Product } from '@/types/Product';
+import { useCharacteristicsSpecs } from '@/hooks/useCharacteristicsSpecs';
+import { isAggregateProduct } from '@/modules/shared/helpers/isAggregateProduct';
+import { AddToFavourites } from '@/modules/shared/components/AddToFavourites';
+import { AddToCard } from '@/modules/shared/components/AddToCard/AddToCard';
+import { CapacityOptions } from './CapacityOptions';
+import { ColorOptions } from './ColorOptions';
 
 type Props<T> = {
   product: T;
@@ -23,7 +26,6 @@ export const ProductCharacteristics = <T extends Product | AggregateProduct>({
   product,
   category,
 }: Props<T>) => {
-  const { t } = useTranslation();
   const {
     id,
     priceRegular,
@@ -48,32 +50,17 @@ export const ProductCharacteristics = <T extends Product | AggregateProduct>({
       }
     : product;
 
-  const products = useAppSelector(state => state.products[category]);
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
-  const specs = [
-    {
-      name: t(Specs.Screen),
-      value: screen,
-    },
-    {
-      name: t(Specs.Resolution),
-      value: resolution,
-    },
-    {
-      name: t(Specs.Processor),
-      value: processor,
-    },
-    {
-      name: t(Specs.RAM),
-      value: ram,
-    },
-  ];
+  const products = useAppSelector(state => state.products[category]);
+  const specs = useCharacteristicsSpecs({ screen, resolution, processor, ram });
+
   const [color, setColor] = useState(product.color);
   const [capacity, setCapacity] = useState(product.capacity);
   const price = priceDiscount ? priceDiscount : priceRegular;
   const nameSpaceId = products[id].namespaceId;
+
   const navigate = useNavigate();
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
 
   useEffect(() => {
     if (color !== product.color || capacity !== product.capacity) {
@@ -85,24 +72,8 @@ export const ProductCharacteristics = <T extends Product | AggregateProduct>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [capacity, color]);
 
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  });
-
   return (
-    <div
-      className={`${styles['']} ${isDarkTheme ? styles['product-charact-dark'] : ''}`}
-    >
+    <div className={cn({ [styles['product-charact-dark']]: isDarkTheme })}>
       <div className={styles['product-charact__options']}>
         <ColorOptions
           colors={colorsAvailable}

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import styles from './MainButton.module.scss';
 import cn from 'classnames';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
 
 type Props = {
   isAdded?: boolean;
@@ -15,21 +16,8 @@ export const MainButton: React.FC<Props> = ({
   buttonText,
   isDisibled = false,
 }) => {
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  });
   return (
     <button
       className={cn(styles['main-button'], {

@@ -1,28 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import styles from './Register.module.scss';
+
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import styles from './Register.module.scss';
+import cn from 'classnames';
+
+import { ThemeMethodsContext } from '@/context/ThemeContext';
 import { Path } from '@/types/Path';
 
 const Register = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  }, []);
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -58,7 +48,9 @@ const Register = () => {
 
   return (
     <div
-      className={`${styles['auth-container']} ${isDarkTheme ? styles.dark_theme : ''}`}
+      className={cn(styles['auth-container'], {
+        [styles.dark_theme]: isDarkTheme,
+      })}
     >
       <div className={styles['auth-card']}>
         <h2>{t('auth.signup')}</h2>

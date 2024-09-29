@@ -1,29 +1,21 @@
-import { useEffect, useState } from 'react';
 import styles from './Contacts.module.scss';
+
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import cn from 'classnames';
+
+import { ThemeMethodsContext } from '@/context/ThemeContext';
 
 export const Contacts = () => {
   const { t } = useTranslation();
 
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const isDark = document.body.classList.contains('dark_theme');
-      setIsDarkTheme(isDark);
-    };
-
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.body, { attributes: true });
-
-    return () => observer.disconnect();
-  }, []);
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   return (
     <div
-      className={`${styles['contacts-container']} ${isDarkTheme ? styles.dark_theme : ''}`}
+      className={cn(styles['contacts-container'], {
+        [styles.dark_theme]: isDarkTheme,
+      })}
     >
       <div className={styles.contacts}>
         <h2>{t('contact_us')}</h2>
