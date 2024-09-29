@@ -7,10 +7,11 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/pagination';
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { PaginationOptions } from 'swiper/types';
 import cn from 'classnames';
 import { getBanners } from '@/utils/getBanners';
-import { PaginationOptions } from '../../../../../node_modules/swiper/types/modules/pagination';
+
 import { PictureSlide } from './PictureSlide/PictureSlide';
 import { ThemeMethodsContext } from '@/context/ThemeContext';
 
