@@ -28,7 +28,7 @@ const getInitialThemeState = (): Theme => {
     ).matches;
     currentTheme = prefersDarkScheme ? Theme.dark : Theme.light;
   }
-  return currentTheme;
+  return currentTheme || Theme.light;
 };
 
 export const ThemeProvider: React.FC<Props> = ({ children }) => {
