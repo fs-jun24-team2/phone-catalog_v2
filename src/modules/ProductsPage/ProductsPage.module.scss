@@ -53,9 +53,13 @@
     align-items: center;
     height: 50vh;
     opacity: 50%;
+    @media (min-width: 640px) { 
+      height: 100vh;
+    }
 
     img {
         max-width: 100%;
-        height: auto;
+        max-height: 100%;
+        object-fit: contain;
     }
 }

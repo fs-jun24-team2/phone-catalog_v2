@@ -6,7 +6,7 @@ export const ProductNotFoundPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const handleBack = () => {
-    navigate(-1);
+    navigate(-2);
   };
 
   return (
