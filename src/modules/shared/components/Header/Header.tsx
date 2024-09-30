@@ -16,6 +16,7 @@ export const Header = () => {
 
   const theme = useContext(ThemeContext);
   const isDarkTheme = theme === Theme.dark;
+  const burgerIcon = getBurgerIcon(isMenuOpen, theme);
 
   const { i18n } = useTranslation();
 
@@ -55,7 +56,7 @@ export const Header = () => {
           setIsMenuOpen={setIsMenuOpen}
         />
         <div className={styles.burger_icon} onClick={toggleMenu}>
-          <img src={getBurgerIcon(isMenuOpen, theme)} alt="Burger icon" />
+          <img src={burgerIcon} alt="Burger icon" />
         </div>
       </div>
     </header>
