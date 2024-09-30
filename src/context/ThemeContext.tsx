@@ -8,7 +8,7 @@ type ThemeMethods = {
   isDarkTheme: boolean;
 };
 
-export const ThemeContext = createContext<Theme>(Theme.light);
+export const ThemeContext = createContext<Theme>(Theme.original);
 export const ThemeMethodsContext = createContext<ThemeMethods>({
   toggleTheme: () => {},
   isDarkTheme: false,
@@ -26,9 +26,9 @@ const getInitialThemeState = (): Theme => {
     const prefersDarkScheme = window.matchMedia(
       '(prefers-color-scheme: dark)',
     ).matches;
-    currentTheme = prefersDarkScheme ? Theme.dark : Theme.light;
+    currentTheme = prefersDarkScheme ? Theme.dark : Theme.original;
   }
-  return currentTheme || Theme.light;
+  return currentTheme || Theme.original;
 };
 
 export const ThemeProvider: React.FC<Props> = ({ children }) => {
@@ -37,7 +37,7 @@ export const ThemeProvider: React.FC<Props> = ({ children }) => {
   const toggleTheme = () => {
     setTheme(theme => {
       if (theme === Theme.dark) {
-        return Theme.light;
+        return Theme.original;
       } else {
         return Theme.dark;
       }
