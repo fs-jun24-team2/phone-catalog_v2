@@ -51,6 +51,7 @@ export const ColorOptions = ({
               key={index}
               className={cn(styles['color-options__color'], {
                 [styles['color-options__color--active']]: isActive,
+                [styles['color-options-dark__color']]: isDarkTheme,
               })}
               style={style}
               onClick={() => handleColorClick(color)}

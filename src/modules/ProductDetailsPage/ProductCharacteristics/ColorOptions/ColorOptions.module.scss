@@ -1,4 +1,4 @@
-@import "../../../../style.scss";
+@import "@/style.scss";
 
 .color-options {
   display: flex;
@@ -42,18 +42,29 @@
 }
 
 .color-options-dark{
+
   .color-options__title{
     color: $dark_secondary;
   }
 
-  .color-options__color{
-    border-color: $dark_surface_2;
+  &__color {
+    border: toRem(2) solid $dark_elements;
+    box-shadow: inset 0 0 0 toRem(2) $dark_black;
 
-    &:hover{
-      border-color: $dark_icons;
+    &:hover {
+      border-color: $dark_secondary;
     }
   }
+
+  // .color-options__color{
+  //   border-color: $dark_surface_2;
+    
+  //   &:hover{
+  //     border-color: $dark_icons;
+  //   }
+  // }
+
   .color-options__color--active{
-    border-color: $dark_secondary;
+    border-color: $dark_white;
   }
 }
