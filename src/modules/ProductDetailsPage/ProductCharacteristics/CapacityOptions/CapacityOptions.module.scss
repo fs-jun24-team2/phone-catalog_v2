@@ -1,4 +1,4 @@
-@import "../../../../style.scss";
+@import "@/style.scss";
 
 .capacity-options {
   display: flex;
@@ -16,9 +16,7 @@
   }
 
   &__capacity {
-    display: flex;
-    align-items: center;
-  
+    line-height: toRem(32);
     height: toRem(32);
     padding: 0 toRem(8);
     
