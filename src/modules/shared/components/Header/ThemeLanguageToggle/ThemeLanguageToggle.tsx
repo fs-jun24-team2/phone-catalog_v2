@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './ThemeLanguageToggle.module.scss';
 import original_ua from '/images/original/icons/original_ua.svg';
 import original_gb from '/images/original/icons/original_gb.svg';
@@ -23,12 +23,23 @@ export const ThemeLanguageToggle: React.FC<ThemeLanguageToggleProps> = ({
   changeLanguage,
   toggleTheme,
 }) => {
+  const [isUserIconActive, setIsUserIconActive] = useState(false);
+  const navigate = useNavigate();
   const location = useLocation();
   const theme = useContext(ThemeContext);
   const isDarkTheme = theme === Theme.dark;
 
   const isDashboardPage = location.pathname === Path.dashboard;
-
+  const handleUserIconCLick = () => {
+    console.log(location.pathname);
+    if (location.pathname === Path.register) {
+      setIsUserIconActive(false);
+      navigate(-1);
+    } else {
+      setIsUserIconActive(true);
+      navigate(Path.register);
+    }
+  };
   return (
     <div
       className={cn(styles.theme_language_toggle, {
@@ -49,13 +60,13 @@ export const ThemeLanguageToggle: React.FC<ThemeLanguageToggleProps> = ({
           alt="Switch Theme"
         />
       </button>
-      <Link to={Path.register} className={styles.theme_toggle}>
+      <button onClick={handleUserIconCLick} className={styles.theme_toggle}>
         <img
           className={styles.user_logo}
-          src={isDashboardPage ? user : getUserIcon(theme)}
+          src={isDashboardPage ? user : getUserIcon(theme, isUserIconActive)}
           alt="User"
         />
-      </Link>
+      </button>
     </div>
   );
 };

@@ -7,19 +7,17 @@
   cursor: pointer;
   display: flex;
   margin-right: toRem(14);
-  border: 1px solid $original_primary;
   border-radius: 50%;
   overflow: hidden;
   justify-content: center;
   align-items: center;
-  box-shadow: 1px 1px 5px $original_primary;
   width: toRem(24);
   height: toRem(24);
   transition: all $transitionDuration ease;
 
   .sunMoon {
-    width: toRem(14);
-    height: toRem(14);
+    width: toRem(20);
+    height: toRem(20);
   }
 
   .flags {
@@ -42,7 +40,9 @@
 
 .dark {
   .theme_toggle {
-    border: 1px solid $dark_secondary;
-    box-shadow: 1px 1px 5px $dark_secondary;
+    .sunMoon {
+      width: toRem(24);
+      height: toRem(24);
+    }
   }
 }

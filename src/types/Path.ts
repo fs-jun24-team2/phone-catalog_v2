@@ -11,7 +11,7 @@ export enum Path {
   favourites = 'favourites',
   notFound = '*',
   dashboard = 'dashboard',
-  register = 'register',
+  register = '/register',
   login = '/login',
   forgotPassword = '/forgot-password',
   contacts = 'contacts',
