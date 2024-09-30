@@ -15,8 +15,8 @@ export const getBurgerIcon = (isMenuOpen: boolean, theme: Theme) => {
   if (!theme) {
     return burgerIcons.original.open;
   }
-  console.log('burgerIcons[theme].open', burgerIcons[theme].open);
   console.log('theme', theme);
   console.log('burgerIcons[theme]', burgerIcons[theme]);
+  console.log('burgerIcons[theme].open', burgerIcons[theme].open);
   return isMenuOpen ? burgerIcons[theme].close : burgerIcons[theme].open;
 };
