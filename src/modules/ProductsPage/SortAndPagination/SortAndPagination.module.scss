@@ -67,7 +67,7 @@
   &__search-input {
     min-height: toRem(38);
     padding: 0 toRem(10);
-    background-color: #FAFBFC;
+    background: none;
     color: $original_secondary;
     border: toRem(1) solid #B4BDC3;
     cursor: pointer;
@@ -93,14 +93,13 @@
     }
   
     &.dark {
-      background-color: #3B3E4A;
       color: #F1F2F9;
       border-color: #3B3E4A;
       
       &:hover {
         border-color: #75767F;
       }
-  // 
+ 
       &:focus {
         border: toRem(1) solid #905BFF;
         border-style: inset;
