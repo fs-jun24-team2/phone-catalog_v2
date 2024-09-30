@@ -68,7 +68,7 @@ export const SortSelector: React.FC<SortSelectorProps> = ({
         : isDarkTheme
           ? '#3B3E4A'
           : '#89939A',
-      backgroundColor: isDarkTheme ? '#3B3E4A' : '#FAFBFC',
+      backgroundColor: 'none',
       color: isDarkTheme ? '#F1F2F9' : '#313237',
       boxShadow: 'none',
       cursor: 'pointer',
