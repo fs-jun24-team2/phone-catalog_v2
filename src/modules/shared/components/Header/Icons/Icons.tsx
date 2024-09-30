@@ -45,7 +45,7 @@ export const Icons: React.FC<IconsProps> = ({
       <div className={styles.iconWrapper}>
         <Link to={Path.favourites}>
           <img src={getFavouriteIcon(theme)} alt="Favorites logo" />
-          {favouritesCount && (
+          {!!favouritesCount && (
             <span className={styles.badge}>{favouritesCount}</span>
           )}
         </Link>
@@ -53,7 +53,7 @@ export const Icons: React.FC<IconsProps> = ({
       <div className={styles.iconWrapper} onClick={handleCartClick}>
         <Link to={Path.cart}>
           <img src={getCartIcon(theme)} alt="Cart logo" />
-          {cartCount && <span className={styles.badge}>{cartCount}</span>}
+          {!!cartCount && <span className={styles.badge}>{cartCount}</span>}
         </Link>
       </div>
     </div>
