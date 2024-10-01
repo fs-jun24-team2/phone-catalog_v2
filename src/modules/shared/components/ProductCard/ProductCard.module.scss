@@ -1,4 +1,4 @@
-@import "../../../../style.scss";
+@import "@/style.scss";
 
 .product-card {
   display: flex;
@@ -133,8 +133,12 @@
 }
 
 .product-card-dark{
-  border: none;
+  border: toRem(1) solid $dark_surface_1;
   background-color: $dark_surface_1; 
+
+  &:hover {
+    border-color: $dark_secondary;
+  }
 
   .product-card__title{
     color: $dark_white;
@@ -175,4 +179,6 @@
     border-color: $dark_elements;
     background-color: $dark_surface_1;
   }
+
+ 
 }
