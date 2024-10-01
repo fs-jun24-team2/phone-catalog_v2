@@ -31,7 +31,6 @@ export const ThemeLanguageToggle: React.FC<ThemeLanguageToggleProps> = ({
 
   const isDashboardPage = location.pathname === Path.dashboard;
   const handleUserIconCLick = () => {
-    console.log(location.pathname);
     if (location.pathname === Path.register) {
       setIsUserIconActive(false);
       navigate(-1);
