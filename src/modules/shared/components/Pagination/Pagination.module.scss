@@ -50,7 +50,7 @@
   
       @media (hover: hover) and (pointer: fine) {
           &:hover {
-              border: toRem(1) solid $original_primary;
+              border: toRem(1) solid $dark_secondary;
           }
         }
   
