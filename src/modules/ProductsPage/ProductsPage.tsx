@@ -64,7 +64,7 @@ export const ProductsPage = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [productsCategory]);
+  }, [productsCategory, currentPage]);
 
   useEffect(() => {
     const newTitle = getProductPageTitle(productsCategory);
@@ -136,7 +136,6 @@ export const ProductsPage = () => {
           <ProductsList
             products={paginatedProducts}
             category={productsCategory}
-            isLoading={isLoading}
           />
 
           {totalPages > 1 && (
@@ -154,9 +153,8 @@ export const ProductsPage = () => {
           <img src={original_notFound} alt="Product not found" />
         </div>
       )}
-      {!isLoading && !isDelayedLoading && (
-        <VirtualAssistant onSearch={setSearchTerm} />
-      )}
+
+      <VirtualAssistant onSearch={setSearchTerm} />
     </>
   );
 };

@@ -6,27 +6,13 @@ import styles from './ProductsList.module.scss';
 import { Product } from '@/types/Product';
 import { ProductsCategory } from '@/types/ProductsCategory';
 import { ProductCard } from '@/modules/shared/components/ProductCard';
-// import { ProductListSkeleton } from '../../shared/components/Skeletons/ProductListSkeleton';
 
 type Props = {
   products: Product[];
   category: ProductsCategory;
-  isLoading: boolean;
 };
 
-export const ProductsList: React.FC<Props> = ({
-  products,
-  category,
-  isLoading,
-}) => {
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setIsDelayedLoading(false);
-  //   }, 800);
-
-  //   return () => clearTimeout(timer);
-  // }, []);
-
+export const ProductsList: React.FC<Props> = ({ products, category }) => {
   return (
     <div className={cn('grid-container', [styles['products-list']])}>
       {products.map(product => (

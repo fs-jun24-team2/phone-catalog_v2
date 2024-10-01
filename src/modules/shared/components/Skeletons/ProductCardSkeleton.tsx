@@ -1,9 +1,10 @@
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import styles from '../ProductCard/ProductCard.module.scss';
+
+import cn from 'classnames';
 import { useContext } from 'react';
 import { ThemeMethodsContext } from '@/context/ThemeContext';
-import cn from 'classnames';
 
 export const ProductCardSkeleton = () => {
   const { isDarkTheme } = useContext(ThemeMethodsContext);
