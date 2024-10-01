@@ -6,11 +6,6 @@ import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 
-import { BreadcrumbsSkeleton } from '../shared/components/Skeletons/BreadcrumbsSkeleton';
-import { TitleSkeleton } from '../shared/components/Skeletons/TitleSkeleton';
-import { SortPanelSkeleton } from '../shared/components/Skeletons/SortPanelSkeleton';
-import { PaginationSkeleton } from '../shared/components/Skeletons/PaginationSkeleton';
-
 import {
   selectProducts,
   selectProductsLoading,
@@ -31,6 +26,7 @@ import { SortAndPaginationPanel } from './SortAndPagination/SortAndPagination';
 import { Pagination } from '../shared/components/Pagination';
 import { ProductsList } from './ProductsList';
 import { VirtualAssistant } from '../VirtualAssistant';
+import { ProductPageSkeleton } from '../shared/components/Skeletons/ProductPageSkeleton';
 
 export const ProductsPage = () => {
   const { t } = useTranslation();
@@ -60,12 +56,15 @@ export const ProductsPage = () => {
   const { isDarkTheme } = useContext(ThemeMethodsContext);
 
   useEffect(() => {
+    setIsDelayedLoading(true);
     const timer = setTimeout(() => {
       setIsDelayedLoading(false);
-    }, 700);
+    }, 500);
 
-    return () => clearTimeout(timer);
-  }, []);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [productsCategory]);
 
   useEffect(() => {
     const newTitle = getProductPageTitle(productsCategory);
@@ -100,52 +99,38 @@ export const ProductsPage = () => {
   );
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  if (isDelayedLoading || isLoading) {
+    return <ProductPageSkeleton productsLength={filteredProducts.length} />;
+  }
 
   return (
     <>
       <div className={styles['product-page__breadcrumbs']}>
-        {isDelayedLoading || isLoading ? (
-          <BreadcrumbsSkeleton />
-        ) : (
-          <Breadcrumbs />
-        )}
+        <Breadcrumbs />
       </div>
-
       <div className={styles['product-page__header']}>
-        {isDelayedLoading || isLoading ? (
-          <TitleSkeleton />
-        ) : (
-          <>
-            <h1
-              className={cn('style-h1', styles['product-page__title'], {
-                [styles['product-page__title-dark']]: isDarkTheme,
-              })}
-            >
-              {title}
-            </h1>
-            <p
-              className={cn(
-                'style-buttons-text',
-                styles['product-page__product-amount'],
-              )}
-            >
-              {totalItems} {t('models')}
-            </p>
-          </>
-        )}
+        <h1
+          className={cn('style-h1', styles['product-page__title'], {
+            [styles['product-page__title-dark']]: isDarkTheme,
+          })}
+        >
+          {title}
+        </h1>
+        <p
+          className={cn(
+            'style-buttons-text',
+            styles['product-page__product-amount'],
+          )}
+        >
+          {totalItems} {t('models')}
+        </p>
       </div>
-
       <div className={styles['product-page__sort-panel']}>
-        {isDelayedLoading || isLoading ? (
-          <SortPanelSkeleton />
-        ) : (
-          <SortAndPaginationPanel
-            onHandleItemPerPage={handleItemsPerPageChange}
-            totalItems={totalItems}
-          />
-        )}
+        <SortAndPaginationPanel
+          onHandleItemPerPage={handleItemsPerPageChange}
+          totalItems={totalItems}
+        />
       </div>
-
       {!!filteredProducts.length && (
         <div className={styles['product-page__products-list']}>
           <ProductsList
@@ -164,17 +149,13 @@ export const ProductsPage = () => {
           )}
         </div>
       )}
-
       {!filteredProducts.length && !isLoading && (
         <div className={styles.notfound}>
           <img src={original_notFound} alt="Product not found" />
         </div>
       )}
-
-      {!filteredProducts.length && isDelayedLoading ? (
-        <PaginationSkeleton />
-      ) : (
-        !isLoading && <VirtualAssistant onSearch={setSearchTerm} />
+      {!isLoading && !isDelayedLoading && (
+        <VirtualAssistant onSearch={setSearchTerm} />
       )}
     </>
   );

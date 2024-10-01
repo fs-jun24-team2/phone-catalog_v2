@@ -1,14 +1,22 @@
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import styles from '../ProductCard/ProductCard.module.scss';
+import { useContext } from 'react';
+import { ThemeMethodsContext } from '@/context/ThemeContext';
+import cn from 'classnames';
 
 export const ProductCardSkeleton = () => {
+  const { isDarkTheme } = useContext(ThemeMethodsContext);
   return (
     <SkeletonTheme
       baseColor="rgba(128, 128, 128, 0.1)"
       highlightColor="rgba(135, 206, 250, 0.25)"
     >
-      <article className={styles['product-card']}>
+      <article
+        className={cn(styles['product-card'], {
+          [styles['product-card-dark']]: isDarkTheme,
+        })}
+      >
         <div className={styles['product-card__header']}>
           <Skeleton height={196} width="100%" />
           <Skeleton
